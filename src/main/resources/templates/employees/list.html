@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleados</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.0/css/bootstrap.min.css}" >
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.0.0/css/all.min.css}" >
+    <link rel="stylesheet" th:href="@{/css/css-footer.css}">
+</head>
+<body>
+    <header th:replace="layout/templates :: header"></header>
+    <section th:replace="layout/templates :: mainEmpleados"></section>
+    <section class="py-4 m-4">
+        <div class="container" >
+            <div class="row">
+                <div class="col-md-4">
+                    <a th:href="@{/profile/create}" class="btn btn-primary btn-block">
+                        <i class="fas fa-plus"></i>
+                        <span>Nuevo empleado</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                             <tr>
+                                 <th scope="col">No.</th>
+                                 <th scope="col">Nombre</th>
+                                 <th scope="col">Tipo de documento</th>
+                                 <th scope="col">No. de documento</th>
+                                 <th scope="col">Teléfono</th>
+                                 <th scope="col">Dirección</th>
+                                 <th scope="col">Empresa</th>
+                                 <th scope="col">Editar</th>
+                                 <th scope="col">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="empleado, count  : ${empleados}" th:if="${empleado.state}">
+                                <td th:text ="${count.count}"></td>
+                                <td th:text ="${empleado.name}+' '+${empleado.surnames}"></td>
+                                <td th:text ="${empleado.documentType.getDescription}"></td>
+                                <td th:text ="${empleado.documentNumber}"></td>
+                                <td th:text ="${empleado.phone}"></td>
+                                <td th:text ="${empleado.address}"></td>
+                                <td th:text ="${empleado.enterprise.getName}"></td>
+                                <td><a th:href="@{/employee/edit/} + ${empleado.idEmployee}" class="btn btn-primary">
+                                    <i class="fa fa-edit"></i>
+                                </a></td>
+                                <td><a th:href="@{/employee/delete/} + ${empleado.idEmployee}" class="btn btn-danger">
+                                    <i class="fa fa-remove"></i>
+                                </a></td>
+                            </tr>
+                         </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer th:replace="layout/templates :: footer"></footer>
+    <script th:src="@{/webjars/bootstrap/5.1.0/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/webjars/popper/js/2.9.3/umd/popper.min.js}"></script>
+</body>
+</html>

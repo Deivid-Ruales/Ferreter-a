@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo empleado</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.0.0/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/css-footer.css}">
+
+</head>
+<body>
+    <header th:replace="layout/templates :: header"></header>
+    <section th:replace="layout/templates :: mainEmpleados"></section>
+    <br>
+    <br>
+    <section>
+        <div class="container">
+            <div class="card">
+                <h4 class="card-title">Datos de usuario</h4>
+                <div class="card-body">
+                    <form id="customer-form" th:action="@{/employee/save}" method="post" th:object="${employee}">
+                        <input type="hidden" name="idEmployee" th:field="*{idEmployee}">
+                        <input type="hidden" name="createdAt" th:field="*{createdAt}">
+                        <div class="form_group row">
+                            <label class="col-sm-2 col-form-label" for="documentType">Tipo de Documento</label>
+                            <div class="col-sm-10">
+                                <select th:field="*{documentType.idDocumentType}" name="documentType" class="custom-select" style="width:100%!important;height:100%!important;">
+                                    <option value="0" selected>Selecionar Tipo Documento</option>
+                                    <option th:each="documentType : ${documentTypes}"
+                                            th:value="${documentType.idDocumentType}"
+                                            th:text="${documentType.description}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('documentType')}" th:errors="*{documentType}"></div>
+                        </div>
+                        <div class="form_group row">
+                            <label class="col-sm-2 col-form-label" for="documentNumber">No. Documento</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="documentNumber" th:field="*{documentNumber}" placeholder="Número de Documento">
+                            </div>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('documentNumber')}" th:errors="*{documentNumber}">Error documentNumber</div>
+                        </div>
+                        <div class="form_group row">
+                            <label class="col-sm-2 col-form-label" for="name">Nombre</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="name" th:field="*{name}" placeholder="Nombre">
+                            </div>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error name</div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="surnames">Apellidos</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="surnames" th:field="*{surnames}" placeholder="Apellidos">
+                            </div>
+                            <div th:if="${#fields.hasErrors('surnames')}" th:errors="*{surnames}">Error surnames</div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="address">Dirección</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="address" th:field="*{address}" placeholder="Dirección">
+                            </div>
+                            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error address</div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="phone">Teléfono</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="phone" th:field="*{phone}" placeholder="Teléfono">
+                            </div>
+                            <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Error phone</div>
+                        </div>
+                        <div class="form_group row">
+                            <label class="col-sm-2 col-form-label" for="enterprise">Empresa</label>
+                            <div class="col-sm-10">
+                                <select th:field="*{enterprise.idEnterprise}" name="enterprise" class="custom-select" style="width:100%!important;height:100%!important;">
+                                    <option value="0" selected>Seleccione empresa</option>
+                                    <option th:each="enterprise : ${enterprise}"
+                                            th:value="${enterprise.idEnterprise}"
+                                            th:text="${enterprise.name}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('enterprise')}" th:errors="*{enterprise}"></div>
+                        </div>
+                        <div class="form_group row">
+                            <label class="col-sm-2 col-form-label" for="profile">Perfil</label>
+                            <div class="col-sm-10">
+                                <select th:field="*{profile.idProfile}" name="profile" class="custom-select" style="width:100%!important;height:100%!important;">
+                                    <option value="0" selected>Seleccione su correo</option>
+                                    <option th:each="profile : ${profile}"
+                                            th:value="${profile.idProfile}"
+                                            th:text="${profile.email}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('profile')}" th:errors="*{profile}"></div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="col-md-2-offset-2" style="padding-left:250px">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer th:replace="layout/templates :: footer"></footer>
+    <script th:src="@{/webjars/bootstrap/5.1.0/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/webjars/popper/js/2.9.3/umd/popper.min.js}"></script>
+</body>
+</html>
